@@ -1,0 +1,44 @@
+{
+  "abs_gap": 0,
+  "fitted_buffer_width": 2,
+  "note": "P4 buffer zone sim. synthetic data. true N=2.",
+  "results": [
+    {
+      "N": 0,
+      "TrainAvgCost": 64,
+      "ValAvgCost": 64,
+      "TestAvgCost": 64,
+      "ValEvents": 10
+    },
+    {
+      "N": 1,
+      "TrainAvgCost": 80,
+      "ValAvgCost": 80,
+      "TestAvgCost": 80,
+      "ValEvents": 2.375
+    },
+    {
+      "N": 2,
+      "TrainAvgCost": 96,
+      "ValAvgCost": 96,
+      "TestAvgCost": 96,
+      "ValEvents": 0
+    },
+    {
+      "N": 3,
+      "TrainAvgCost": 112,
+      "ValAvgCost": 112,
+      "TestAvgCost": 112,
+      "ValEvents": 0
+    },
+    {
+      "N": 4,
+      "TrainAvgCost": 128,
+      "ValAvgCost": 128,
+      "TestAvgCost": 128,
+      "ValEvents": 0
+    }
+  ],
+  "seed": 42,
+  "true_buffer_width": 2
+}

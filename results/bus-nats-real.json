@@ -1,0 +1,97 @@
+{
+  "compare_with": "in-process channel baseline (results/bus-baseline.json)",
+  "elapsed_ms": 2563,
+  "note": "M1 真实 NATS pub/sub. Server localhost:4222.",
+  "results": [
+    {
+      "payload_size": 64,
+      "concurrency": 1,
+      "iterations": 1000,
+      "p50_ns": 504300,
+      "p99_ns": 874200,
+      "mean_ns": 441205,
+      "min_ns": 0,
+      "max_ns": 874200
+    },
+    {
+      "payload_size": 64,
+      "concurrency": 10,
+      "iterations": 1000,
+      "p50_ns": 504400,
+      "p99_ns": 1098600,
+      "mean_ns": 620055,
+      "min_ns": 504400,
+      "max_ns": 1098600
+    },
+    {
+      "payload_size": 64,
+      "concurrency": 100,
+      "iterations": 1000,
+      "p50_ns": 616100,
+      "p99_ns": 624700,
+      "mean_ns": 315395,
+      "min_ns": 0,
+      "max_ns": 624700
+    },
+    {
+      "payload_size": 1024,
+      "concurrency": 1,
+      "iterations": 1000,
+      "p50_ns": 1036500,
+      "p99_ns": 1793300,
+      "mean_ns": 858526,
+      "min_ns": 0,
+      "max_ns": 1793300
+    },
+    {
+      "payload_size": 1024,
+      "concurrency": 10,
+      "iterations": 1000,
+      "p50_ns": 712700,
+      "p99_ns": 2452500,
+      "mean_ns": 1033475,
+      "min_ns": 0,
+      "max_ns": 2452500
+    },
+    {
+      "payload_size": 1024,
+      "concurrency": 100,
+      "iterations": 1000,
+      "p50_ns": 764800,
+      "p99_ns": 1309600,
+      "mean_ns": 784272,
+      "min_ns": 0,
+      "max_ns": 1507100
+    },
+    {
+      "payload_size": 65536,
+      "concurrency": 1,
+      "iterations": 1000,
+      "p50_ns": 2735700,
+      "p99_ns": 31901100,
+      "mean_ns": 4555985,
+      "min_ns": 508600,
+      "max_ns": 33987600
+    },
+    {
+      "payload_size": 65536,
+      "concurrency": 10,
+      "iterations": 1000,
+      "p50_ns": 3244900,
+      "p99_ns": 29108500,
+      "mean_ns": 5516818,
+      "min_ns": 0,
+      "max_ns": 39995200
+    },
+    {
+      "payload_size": 65536,
+      "concurrency": 100,
+      "iterations": 1000,
+      "p50_ns": 4186100,
+      "p99_ns": 34119500,
+      "mean_ns": 7427015,
+      "min_ns": 0,
+      "max_ns": 41969900
+    }
+  ]
+}

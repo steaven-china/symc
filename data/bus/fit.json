@@ -1,0 +1,33 @@
+{
+  "elapsed_ms": 1,
+  "note": "M1 in-process Go channel baseline. NATS/Redis/gossip deferred.",
+  "results": [
+    {
+      "concurrency": 1,
+      "iterations": 1000,
+      "max_ns": 561000,
+      "mean_ns": 88077,
+      "min_ns": 0,
+      "p50_ns": 0,
+      "p99_ns": 561000
+    },
+    {
+      "concurrency": 10,
+      "iterations": 1000,
+      "max_ns": 0,
+      "mean_ns": 0,
+      "min_ns": 0,
+      "p50_ns": 0,
+      "p99_ns": 0
+    },
+    {
+      "concurrency": 100,
+      "iterations": 1000,
+      "max_ns": 0,
+      "mean_ns": 0,
+      "min_ns": 0,
+      "p50_ns": 0,
+      "p99_ns": 0
+    }
+  ]
+}

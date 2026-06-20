@@ -1,0 +1,97 @@
+{
+  "compare_with": "exp1-bus (in-process channel), exp1-bus-nats (real NATS)",
+  "elapsed_ms": 2476,
+  "note": "M1 Redis Streams via miniredis mock (in-process). For real Redis, run cmd/exp1-bus-redis-real.",
+  "results": [
+    {
+      "payload_size": 64,
+      "concurrency": 1,
+      "iterations": 1000,
+      "p50_ns": 7419700,
+      "p99_ns": 11822600,
+      "mean_ns": 6875697,
+      "min_ns": 0,
+      "max_ns": 12172000
+    },
+    {
+      "payload_size": 64,
+      "concurrency": 10,
+      "iterations": 1000,
+      "p50_ns": 42872400,
+      "p99_ns": 68367200,
+      "mean_ns": 40553959,
+      "min_ns": 0,
+      "max_ns": 68396800
+    },
+    {
+      "payload_size": 64,
+      "concurrency": 100,
+      "iterations": 1000,
+      "p50_ns": 54163500,
+      "p99_ns": 100790500,
+      "mean_ns": 52748089,
+      "min_ns": 903300,
+      "max_ns": 104503500
+    },
+    {
+      "payload_size": 1024,
+      "concurrency": 1,
+      "iterations": 1000,
+      "p50_ns": 5359400,
+      "p99_ns": 10391600,
+      "mean_ns": 5208675,
+      "min_ns": 0,
+      "max_ns": 10914300
+    },
+    {
+      "payload_size": 1024,
+      "concurrency": 10,
+      "iterations": 1000,
+      "p50_ns": 39450600,
+      "p99_ns": 68327300,
+      "mean_ns": 39574355,
+      "min_ns": 0,
+      "max_ns": 68759300
+    },
+    {
+      "payload_size": 1024,
+      "concurrency": 100,
+      "iterations": 1000,
+      "p50_ns": 47090300,
+      "p99_ns": 80153300,
+      "mean_ns": 47950246,
+      "min_ns": 513600,
+      "max_ns": 93692900
+    },
+    {
+      "payload_size": 65536,
+      "concurrency": 1,
+      "iterations": 1000,
+      "p50_ns": 999500,
+      "p99_ns": 3800400,
+      "mean_ns": 875963,
+      "min_ns": 0,
+      "max_ns": 13371900
+    },
+    {
+      "payload_size": 65536,
+      "concurrency": 10,
+      "iterations": 1000,
+      "p50_ns": 185554400,
+      "p99_ns": 272036600,
+      "mean_ns": 171381609,
+      "min_ns": 1808900,
+      "max_ns": 273106300
+    },
+    {
+      "payload_size": 65536,
+      "concurrency": 100,
+      "iterations": 1000,
+      "p50_ns": 281604300,
+      "p99_ns": 389531200,
+      "mean_ns": 272534690,
+      "min_ns": 1461000,
+      "max_ns": 391555100
+    }
+  ]
+}

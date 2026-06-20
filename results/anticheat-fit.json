@@ -1,0 +1,15 @@
+{
+  "elapsed_ms": 3,
+  "note": "M4 minimal: batch timing, hash_len=8 only. Full sweep deferred.",
+  "results": [
+    {
+      "hash_len": 8,
+      "events": 5000,
+      "total_hash_time_ns": 1096900,
+      "total_validate_time_ns": 2359000,
+      "hash_avg_ns_per_event": 219,
+      "validate_avg_ns_per_event": 471,
+      "failed_validations": 0
+    }
+  ]
+}

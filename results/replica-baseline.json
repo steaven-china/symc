@@ -1,0 +1,102 @@
+{
+  "elapsed_ms": 24008,
+  "note": "M3 broadcast bandwidth. real network: add 10-100x for cross-pod.",
+  "results": [
+    {
+      "payload_size": 64,
+      "replicas": 1,
+      "total_msgs": 27694689,
+      "total_bytes": 1772460096,
+      "bandwidth_mbps": 845.1055365510811,
+      "msg_rate_per_sec": 13846209.110852912
+    },
+    {
+      "payload_size": 64,
+      "replicas": 4,
+      "total_msgs": 18724360,
+      "total_bytes": 1198359040,
+      "bandwidth_mbps": 571.273302445338,
+      "msg_rate_per_sec": 9359741.787264418
+    },
+    {
+      "payload_size": 64,
+      "replicas": 16,
+      "total_msgs": 17208160,
+      "total_bytes": 1101322240,
+      "bandwidth_mbps": 524.7095617365178,
+      "msg_rate_per_sec": 8596841.459491108
+    },
+    {
+      "payload_size": 64,
+      "replicas": 64,
+      "total_msgs": 13493504,
+      "total_bytes": 863584256,
+      "bandwidth_mbps": 411.7080177767007,
+      "msg_rate_per_sec": 6745424.163253464
+    },
+    {
+      "payload_size": 1024,
+      "replicas": 1,
+      "total_msgs": 25481405,
+      "total_bytes": 26092958720,
+      "bandwidth_mbps": 12437.86092486961,
+      "msg_rate_per_sec": 12736369.58706648
+    },
+    {
+      "payload_size": 1024,
+      "replicas": 4,
+      "total_msgs": 16324072,
+      "total_bytes": 16715849728,
+      "bandwidth_mbps": 7968.906229707791,
+      "msg_rate_per_sec": 8160159.979220778
+    },
+    {
+      "payload_size": 1024,
+      "replicas": 16,
+      "total_msgs": 14905856,
+      "total_bytes": 15263596544,
+      "bandwidth_mbps": 7275.5144065831255,
+      "msg_rate_per_sec": 7450126.7523411205
+    },
+    {
+      "payload_size": 1024,
+      "replicas": 64,
+      "total_msgs": 13511040,
+      "total_bytes": 13835304960,
+      "bandwidth_mbps": 6595.183883136304,
+      "msg_rate_per_sec": 6753468.296331575
+    },
+    {
+      "payload_size": 65536,
+      "replicas": 1,
+      "total_msgs": 25552552,
+      "total_bytes": 1674612047872,
+      "bandwidth_mbps": 798403.238017611,
+      "msg_rate_per_sec": 12774451.808281776
+    },
+    {
+      "payload_size": 65536,
+      "replicas": 4,
+      "total_msgs": 15758668,
+      "total_bytes": 1032760066048,
+      "bandwidth_mbps": 492247.2993580353,
+      "msg_rate_per_sec": 7875956.789728565
+    },
+    {
+      "payload_size": 65536,
+      "replicas": 16,
+      "total_msgs": 14955968,
+      "total_bytes": 980154318848,
+      "bandwidth_mbps": 467199.4776351294,
+      "msg_rate_per_sec": 7475191.642162071
+    },
+    {
+      "payload_size": 65536,
+      "replicas": 64,
+      "total_msgs": 13609152,
+      "total_bytes": 891889385472,
+      "bandwidth_mbps": 425105.2664959492,
+      "msg_rate_per_sec": 6801684.263935187
+    }
+  ]
+}
