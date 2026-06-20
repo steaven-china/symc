@@ -1,0 +1,26 @@
+FROM eclipse-temurin:25-jdk
+
+ARG PAPER_VERSION=26.1.2
+ARG PAPER_JAR=paperclip.jar
+ARG SYMC_JAR=symc-plugin.jar
+
+USER root
+RUN apt-get update -qq \
+    && apt-get install -y -qq --no-install-recommends gettext-base bash tini \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN groupadd -r paper && useradd -r -g paper -d /opt/paper paper \
+    && mkdir -p /opt/paper/world /opt/paper/plugins /opt/paper/logs \
+    && chown -R paper:paper /opt/paper
+
+COPY ${PAPER_JAR} /opt/paper/paper-paperclip-${PAPER_VERSION}.local-SNAPSHOT.jar
+COPY ${SYMC_JAR} /opt/paper/plugins/symc-plugin-0.1.0.jar
+COPY entrypoint.sh /opt/paper/entrypoint.sh
+COPY config.yml.template /opt/paper/plugins/symc/config.yml.template
+RUN chmod +x /opt/paper/entrypoint.sh \
+    && chown -R paper:paper /opt/paper
+
+USER paper
+
+EXPOSE 25565
+ENTRYPOINT ["/opt/paper/entrypoint.sh"]

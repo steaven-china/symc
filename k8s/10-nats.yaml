@@ -1,0 +1,100 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nats
+  namespace: symc
+  labels:
+    app: nats
+spec:
+  clusterIP: None
+  selector:
+    app: nats
+  ports:
+    - name: client
+      port: 4222
+      targetPort: 4222
+    - name: cluster
+      port: 6222
+      targetPort: 6222
+    - name: monitor
+      port: 8222
+      targetPort: 8222
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nats
+  namespace: symc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nats
+  template:
+    metadata:
+      labels:
+        app: nats
+    spec:
+      containers:
+        - name: nats
+          image: nats:2.10-alpine
+          imagePullPolicy: IfNotPresent
+          args:
+            - --config
+            - /etc/nats/nats.conf
+          ports:
+            - containerPort: 4222
+              name: client
+            - containerPort: 6222
+              name: cluster
+            - containerPort: 8222
+              name: monitor
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          volumeMounts:
+            - name: conf
+              mountPath: /etc/nats
+            - name: data
+              mountPath: /data
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8222
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8222
+            initialDelaySeconds: 5
+            periodSeconds: 10
+      volumes:
+        - name: conf
+          configMap:
+            name: nats-conf
+        - name: data
+          emptyDir: {}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nats-conf
+  namespace: symc
+data:
+  nats.conf: |
+    server_name: nats-0
+    port: 4222
+    http_port: 8222
+    jetstream {
+      store_dir: /data
+      max_mem: 256M
+      max_file: 1G
+    }
+    logtime: true
+    debug: false
+    trace: false

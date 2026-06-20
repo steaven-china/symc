@@ -1,0 +1,34 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: kaniko-build
+  namespace: symc
+spec:
+  backoffLimit: 1
+  template:
+    spec:
+      nodeName: k8s-wk-01
+      restartPolicy: Never
+      containers:
+      - name: kaniko
+        image: docker.io/kaniko-project/executor:debug
+        imagePullPolicy: IfNotPresent
+        args:
+        - "--context=tar:///host-tmp/build-context.tar.gz"
+        - "--destination=paper-symc:latest"
+        - "--insecure"
+        - "--insecure-pull"
+        - "--no-push"
+        - "--tarPath=/host-tmp/paper-symc-built.tar"
+        - "--verbosity=info"
+        resources:
+          requests:
+            cpu: 500m
+            memory: 1Gi
+          limits:
+            cpu: 2000m
+            memory: 4Gi
+        volumeMounts:
+        - { name: host-tmp, mountPath: /host-tmp }
+      volumes:
+      - { name: host-tmp, hostPath: { path: /tmp } }

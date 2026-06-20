@@ -1,0 +1,98 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: paper-region
+  namespace: symc
+spec:
+  selector:
+    app: paper-region
+  ports:
+    - name: mc
+      port: 25565
+      targetPort: 25565
+      protocol: TCP
+    - name: rcon
+      port: 25575
+      targetPort: 25575
+      protocol: TCP
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: paper-region
+  namespace: symc
+  labels:
+    app: paper-region
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: paper-region
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: paper-region
+    spec:
+      nodeName: k8s-wk-01
+      terminationGracePeriodSeconds: 60
+      containers:
+        - name: paper
+          image: eclipse-temurin:25-jdk
+          imagePullPolicy: IfNotPresent
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              cd /opt/paper
+              mkdir -p plugins/symc
+              if [ -f plugins/symc/config.yml.template ]; then
+                REGION="$${REGION:-region-a}" NATS_URL="$${NATS_URL:-nats://nats:4222}" \
+                  envsubst < plugins/symc/config.yml.template > plugins/symc/config.yml
+              fi
+              exec java \
+                -Xms2G -Xmx2G -XX:+UseG1GC \
+                "-Dnats.url=$${NATS_URL:-nats://nats:4222}" \
+                "-Dregion.id=$${REGION:-region-a}" \
+                -jar /opt/paper/paperclip.jar \
+                --nogui
+          env:
+            - name: REGION
+              value: "region-a"
+            - name: NATS_URL
+              value: "nats://nats:4222"
+          resources:
+            requests:
+              cpu: 500m
+              memory: 1536Mi
+            limits:
+              cpu: 1500m
+              memory: 2560Mi
+          ports:
+            - containerPort: 25565
+              name: mc
+              protocol: TCP
+            - containerPort: 25575
+              name: rcon
+              protocol: TCP
+          livenessProbe:
+            tcpSocket:
+              port: 25565
+            initialDelaySeconds: 90
+            periodSeconds: 30
+            failureThreshold: 3
+          readinessProbe:
+            tcpSocket:
+              port: 25565
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 3
+          volumeMounts:
+            - name: paper-home
+              mountPath: /opt/paper
+      volumes:
+        - name: paper-home
+          hostPath:
+            path: /tmp/paper
+            type: DirectoryOrCreate

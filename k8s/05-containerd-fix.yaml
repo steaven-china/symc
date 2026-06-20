@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: containerd-fix
+  namespace: kube-system
+  labels:
+    app: containerd-fix
+spec:
+  selector:
+    matchLabels:
+      app: containerd-fix
+  template:
+    metadata:
+      labels:
+        app: containerd-fix
+    spec:
+      hostPID: true
+      hostNetwork: true
+      tolerations:
+        - operator: Exists
+      containers:
+        - name: fixer
+          image: docker.io/calico/node:v3.28.0
+          imagePullPolicy: IfNotPresent
+          command: ["sh", "-c"]
+          args:
+            - |
+              set -e
+              mkdir -p /host/etc/containerd/certs.d/docker.io
+              printf '[host."https://docker.m.daocloud.io"]\n  capabilities = ["pull", "resolve"]\n' > /host/etc/containerd/certs.d/docker.io/hosts.toml
+              echo "DONE: wrote hosts.toml on $(hostname)"
+              cat /host/etc/containerd/certs.d/docker.io/hosts.toml
+              sleep infinity
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: host
+              mountPath: /host
+            - name: run
+              mountPath: /run
+      volumes:
+        - name: host
+          hostPath:
+            path: /
+        - name: run
+          hostPath:
+            path: /run
