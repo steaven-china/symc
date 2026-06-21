@@ -83,21 +83,29 @@ kubectl apply -f k8s/22-region-c.yaml
 # 验证:每 region 都连 nats,subject "symc.cooperation.{region}"
 # 跨 region 红石事件 publish/subscribe
 ```
+**Java 源在 Paper fork git history** —— 恢复不需要反编译:
+```bash
+cd /d/engine/symc/Paper
+git checkout 29585ac -- paper-server/src/main/java/dev/symc/paper/
+# 恢复 7 个 .java 文件:
+# - SymcAntiCheatHook.java
+# - SymcBootstrap.java
+# - SymcCooperationRequest.java
+# - SymcPlugin.java
+# - SymcWriteAuthorityManager.java
+# - package-info.java
+# (M8 commit 29585ac 之前有 SymcCooperationRequest.java / SymcWriteAuthorityManager.java / SymcAntiCheatHook.java 是 stub 版本)
+```
 
-## M12:故障注入 + JFR
+**重写流程**:
+1. 改 SymcCooperationRequest.java:Subscribe NATS subject + hook BlockRedstoneEvent
+2. 改 SymcWriteAuthorityManager.java:requestWriteGrant() + NATS pub/sub for cross-region
+3. 改 SymcAntiCheatHook.java:SHA256 签名 verify
+4. 用 Paper 编译 classpath 重编译(./gradlew.bat :paper-server:compileJava + 自定义 task 重打 plugin jar)
+5. 推到 K8s hostPath(`kubectl exec img-loader -- sh -c 'cp new-jar /tmp/paper/plugins/symc-plugin-0.1.0.jar'` + delete paper-region pod)
+6. 验证 NATS 消息流(`nats sub 'symc.cooperation.>'` 收到 publish)
 
-- netem 延迟 100ms / 丢包 1%
-- Pod delete test fail-over
-- JFR 火焰图收 + async-profiler
-
-## M13:headlessmc 1000 bot 压测
-
-- 1000 bots 平均分散 3 region
-- 监测 tick lag / 内存 / 网络
-- 跨区红石事件 P99 跨网延迟
-
-## 关键限制
-
+**预计 2-3 小时**(改 3 文件 + 重编 + 重部 + 验证)
 **Java 源码已删** —— 重新生成需要:
 - 反编译 `symc-plugin-0.1.0.jar` (用 cfr / procyon)
 - 重写 stub → real listener
