@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: rcon-client
+  namespace: symc
+spec:
+  nodeName: k8s-wk-01
+  restartPolicy: Never
+  containers:
+  - name: rcon
+    image: debian:bookworm-slim
+    command: ["sleep", "3600"]
+    resources:
+      requests: { cpu: 50m, memory: 64Mi }
+    volumeMounts:
+    - { name: paper-home-a, mountPath: /opt/paper-a }
+    - { name: paper-home-b, mountPath: /opt/paper-b }
+  volumes:
+  - { name: paper-home-a, hostPath: { path: /tmp/paper, type: DirectoryOrCreate } }
+  - { name: paper-home-b, hostPath: { path: /tmp/paper-region-b, type: DirectoryOrCreate } }
