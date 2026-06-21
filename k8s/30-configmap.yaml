@@ -14,8 +14,9 @@ data:
     enable-status=true
     enforce-secure-profile=true
     gamemode=survival
-    generate-structures=true
-    hardcore=false
+    enable-rcon=true
+    rcon.password=symc
+    rcon.port=25575
     max-players=20
     max-tick-time=60000
     motd=Symc Test Server - Distributed MC Sync Engine
